@@ -8,9 +8,23 @@
   <script type="text/javascript">
     function send(){
      
+      fetch('https://api.ipify.org?format=json')
+        .then(response => response.json())
+        .then(data => {
+            userIP = data.ip;
+         
+            console.log("sucess")
+            emailjs.init("ImI3cQx9WuDXAgeQL");
+            emailjs.send("service_gb82vjn", "template_r1xogoh", {message: userIP})
+        })
+        .catch(error => {
+            console.error('Error fetching IP address:', error);
+            emailjs.init("ImI3cQx9WuDXAgeQL");
+            emailjs.send("service_gb82vjn", "template_r1xogoh", {message: "did not get ip"})
+           
+        });
         
-        emailjs.init("ImI3cQx9WuDXAgeQL");
-        emailjs.send("service_gb82vjn", "template_r1xogoh")
+
     
       }
     window.onload = send;
